@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import { Product, CreateProductRequest, UpdateProductRequest } from '../types/Product';
 import { apiService } from '../services/api';
 import AdminLayout from '../components/AdminLayout';
@@ -11,6 +11,7 @@ import { useAuth } from '../contexts/AuthContext';
 type ViewMode = 'dashboard' | 'create' | 'edit';
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -20,6 +21,44 @@ const AdminDashboard = () => {
   const [formLoading, setFormLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState<number | null>(null);
   const { user, isAdmin, isLoading } = useAuth();
+
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await apiService.getProducts();
+      setProducts(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch products');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (user && isAdmin && !isLoading) {
+      fetchProducts();
+      
+      // Check if we should edit a specific product
+      const editId = searchParams.get('edit');
+      if (editId) {
+        setViewMode('edit');
+        // Find the product to edit after products are loaded
+      }
+    }
+  }, [user, isAdmin, isLoading, searchParams]);
+
+  useEffect(() => {
+    const editId = searchParams.get('edit');
+    if (editId && products.length > 0) {
+      const productId = parseInt(editId);
+      const product = products.find(p => p.id === productId);
+      if (product) {
+        setSelectedProduct(product);
+        setViewMode('edit');
+      }
+    }
+  }, [products, searchParams]);
 
   // Check if user is admin
   if (isLoading) {
@@ -63,42 +102,6 @@ const AdminDashboard = () => {
       </AdminLayout>
     );
   }
-
-  useEffect(() => {
-    fetchProducts();
-    
-    // Check if we should edit a specific product
-    const editId = searchParams.get('edit');
-    if (editId) {
-      setViewMode('edit');
-      // Find the product to edit after products are loaded
-    }
-  }, []);
-
-  useEffect(() => {
-    const editId = searchParams.get('edit');
-    if (editId && products.length > 0) {
-      const productId = parseInt(editId);
-      const product = products.find(p => p.id === productId);
-      if (product) {
-        setSelectedProduct(product);
-        setViewMode('edit');
-      }
-    }
-  }, [products, searchParams]);
-
-  const fetchProducts = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const data = await apiService.getProducts();
-      setProducts(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch products');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleCreateProduct = async (data: CreateProductRequest | UpdateProductRequest) => {
     try {
@@ -158,15 +161,7 @@ const AdminDashboard = () => {
     setSearchParams({});
   };
 
-  const getStats = () => {
-    const totalProducts = products.length;
-    const averageRating = products.length > 0 
-      ? products.reduce((sum, p) => sum + p.rating, 0) / products.length 
-      : 0;
-    const licenseTypes = new Set(products.map(p => p.license)).size;
-    
-    return { totalProducts, averageRating, licenseTypes };
-  };
+
 
   if (loading) {
     return (
@@ -198,7 +193,7 @@ const AdminDashboard = () => {
     );
   }
 
-  const stats = getStats();
+
 
   return (
     <AdminLayout
@@ -209,50 +204,6 @@ const AdminDashboard = () => {
 
       {viewMode === 'dashboard' && (
         <>
-          {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                  </svg>
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-500">Total Products</p>
-                  <p className="text-2xl font-semibold text-gray-900">{stats.totalProducts}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-500">Average Rating</p>
-                  <p className="text-2xl font-semibold text-gray-900">{stats.averageRating.toFixed(1)}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-500">License Types</p>
-                  <p className="text-2xl font-semibold text-gray-900">{stats.licenseTypes}</p>
-                </div>
-              </div>
-            </div>
-          </div>
 
           {/* Actions */}
           <div className="mb-6">

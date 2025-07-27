@@ -235,14 +235,10 @@ const ProductForm = ({ product, onSubmit, onCancel, isLoading = false }: Product
                 disabled={isLoading}
               >
                 <option value="">Select a category</option>
-                <option value="UI Components">UI Components</option>
-                <option value="Templates">Templates</option>
-                <option value="Backend">Backend</option>
-                <option value="Mobile">Mobile</option>
-                <option value="E-commerce">E-commerce</option>
-                <option value="Libraries">Libraries</option>
-                <option value="Tools">Tools</option>
-                <option value="Other">Other</option>
+                <option value="Support">Support</option>
+                <option value="Core">Core</option>
+                <option value="In-Dataspace Enablement">In-Dataspace Enablement</option>
+                <option value="Inter Dataspace enablement">Inter Dataspace enablement</option>
               </select>
               {errors.category && <p className="mt-1 text-sm text-red-600">{errors.category}</p>}
             </div>

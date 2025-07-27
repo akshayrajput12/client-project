@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import AdminSidebar from './AdminSidebar';
+import DashboardDropdown from './DashboardDropdown';
 import { useAuth } from '../contexts/AuthContext';
+import { useDashboardStats } from '../hooks/useDashboardStats';
 import {
   Bars3Icon,
   BellIcon,
@@ -27,6 +29,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
+  const { stats } = useDashboardStats();
 
   // Check if mobile
   useEffect(() => {
@@ -114,6 +117,9 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
                     />
                   </div>
                 </div>
+
+                {/* Dashboard Dropdown */}
+                <DashboardDropdown stats={stats} />
 
                 {/* Notifications */}
                 <button className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md">

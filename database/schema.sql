@@ -101,14 +101,10 @@ INSERT IGNORE INTO users (email, password, is_admin) VALUES
 
 -- Insert default categories
 INSERT IGNORE INTO categories (name, description) VALUES 
-('UI Components', 'User interface components and libraries'),
-('Templates', 'Website and application templates'),
-('Backend', 'Backend services and APIs'),
-('Mobile', 'Mobile application resources'),
-('E-commerce', 'E-commerce solutions and themes'),
-('Libraries', 'Code libraries and frameworks'),
-('Tools', 'Development tools and utilities'),
-('Other', 'Other miscellaneous products');
+('Support', 'Support and assistance related products'),
+('Core', 'Core functionality and essential components'),
+('In-Dataspace Enablement', 'Products that enable functionality within a dataspace'),
+('Inter Dataspace enablement', 'Products that enable functionality between dataspaces');
 
 -- Create a view for products with category information
 CREATE OR REPLACE VIEW products_with_category AS

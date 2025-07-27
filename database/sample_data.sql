@@ -20,7 +20,7 @@ INSERT INTO products (
   'A comprehensive React component library with modern design patterns, TypeScript support, and extensive customization options.',
   5,
   49.99,
-  'UI Components',
+  'Core',
   'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=300&h=200&fit=crop',
   JSON_ARRAY(
     'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=300&fit=crop',
@@ -49,7 +49,7 @@ INSERT INTO products (
   'Professional admin dashboard template built with Vue 3, featuring charts, tables, and responsive design.',
   4,
   79.99,
-  'Templates',
+  'In-Dataspace Enablement',
   'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&h=200&fit=crop',
   JSON_ARRAY(
     'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop',
@@ -78,7 +78,7 @@ INSERT INTO products (
   'Production-ready Node.js API boilerplate with authentication, database integration, and comprehensive testing.',
   5,
   0.00,
-  'Backend',
+  'Core',
   'https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=300&h=200&fit=crop',
   JSON_ARRAY(
     'https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=400&h=300&fit=crop'
@@ -106,7 +106,7 @@ INSERT INTO products (
   'Collection of 500+ high-quality mobile app icons in multiple formats and sizes.',
   4,
   29.99,
-  'Mobile',
+  'Support',
   'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=300&h=200&fit=crop',
   JSON_ARRAY(
     'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=300&fit=crop',
@@ -135,7 +135,7 @@ INSERT INTO products (
   'Modern and responsive Shopify theme designed for fashion and lifestyle brands.',
   5,
   159.99,
-  'E-commerce',
+  'Inter Dataspace enablement',
   'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=300&h=200&fit=crop',
   JSON_ARRAY(
     'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop',
@@ -164,7 +164,7 @@ INSERT INTO products (
   'Clean and modern Angular dashboard built with Material Design components.',
   4,
   89.99,
-  'Templates',
+  'In-Dataspace Enablement',
   'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&h=200&fit=crop',
   JSON_ARRAY(
     'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop'
@@ -192,7 +192,7 @@ INSERT INTO products (
   'Modern Python API framework boilerplate with async support, automatic documentation, and type hints.',
   5,
   0.00,
-  'Backend',
+  'Core',
   'https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=300&h=200&fit=crop',
   JSON_ARRAY(
     'https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=400&h=300&fit=crop'
@@ -220,7 +220,7 @@ INSERT INTO products (
   'Beautiful Flutter UI components collection with customizable themes and animations.',
   4,
   39.99,
-  'Mobile',
+  'Inter Dataspace enablement',
   'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=300&h=200&fit=crop',
   JSON_ARRAY(
     'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=300&fit=crop',
