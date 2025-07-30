@@ -129,9 +129,14 @@ const CartPage: React.FC = () => {
                   </div>
 
                   {/* Price */}
-                  <div className="text-lg font-medium text-gray-900">
-                    ${typeof item.product?.price === 'number' ? item.product.price.toFixed(2) : '0.00'}
-                  </div>
+                  {/* <div className="text-right">
+                    <div className="text-lg font-medium text-gray-900">
+                      ${typeof item.product?.price === 'number' ? item.product.price.toFixed(2) : '0.00'}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      Total: ${typeof item.product?.price === 'number' ? (item.product.price * item.quantity).toFixed(2) : '0.00'}
+                    </div>
+                  </div> */}
 
                   {/* Quantity Controls */}
                   <div className="flex items-center space-x-2">

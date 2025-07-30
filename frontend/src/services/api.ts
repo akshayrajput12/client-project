@@ -10,7 +10,7 @@ import {
   UpdateCartRequest
 } from '../types/Product';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'http://localhost:5500/api';
 
 class ApiService {
   private async request<T>(endpoint: string, options?: RequestInit): Promise<T> {

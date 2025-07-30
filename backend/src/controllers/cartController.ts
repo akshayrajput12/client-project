@@ -8,37 +8,99 @@ import { RowDataPacket, ResultSetHeader } from 'mysql2';
 export const getCart = async (req: Request, res: Response) => {
   try {
     const userId = (req as any).user.userId;
+    
+    if (!userId) {
+      return res.status(401).json({ error: 'User not authenticated' });
+    }
 
     const [rows] = await pool.execute<RowDataPacket[]>(`
       SELECT
-        c.*,
-        p.name as product_name,
-        p.price as product_price,
-        p.main_image_url as product_image,
-        p.license as product_license,
-        p.category as product_category
+        c.id as cart_id,
+        c.user_id,
+        c.product_id,
+        c.quantity,
+        c.created_at as cart_created_at,
+        c.updated_at as cart_updated_at,
+        p.id as product_id,
+        p.name,
+        p.license,
+        p.description,
+        p.rating,
+        p.price,
+        p.category,
+        p.main_image_url,
+        p.gallery_images,
+        p.feature_1,
+        p.feature_2,
+        p.feature_3,
+        p.feature_4,
+        p.feature_5,
+        p.requirements,
+        p.version,
+        p.file_size,
+        p.download_count,
+        p.is_featured,
+        p.demo_url,
+        p.documentation_url,
+        p.support_email,
+        p.tags,
+        p.created_at as product_created_at,
+        p.updated_at as product_updated_at
       FROM cart c
       JOIN products p ON c.product_id = p.id
       WHERE c.user_id = ?
       ORDER BY c.created_at DESC
     `, [userId]);
 
-    const cartItems = rows.map(row => ({
-      id: row.id,
-      user_id: row.user_id,
-      product_id: row.product_id,
-      quantity: row.quantity,
-      created_at: row.created_at,
-      updated_at: row.updated_at,
-      product: {
-        id: row.product_id,
-        name: row.product_name,
-        price: row.product_price,
-        main_image_url: row.product_image,
-        license: row.product_license,
-        category: row.product_category
+    const cartItems = rows.map(row => {
+      let galleryImages = [];
+      try {
+        if (row.gallery_images) {
+          galleryImages = typeof row.gallery_images === 'string' 
+            ? JSON.parse(row.gallery_images) 
+            : row.gallery_images;
+        }
+      } catch (error) {
+        console.error('Error parsing gallery_images:', error);
+        galleryImages = [];
       }
-    }));
+
+      return {
+        id: row.cart_id,
+        user_id: row.user_id,
+        product_id: row.product_id,
+        quantity: row.quantity,
+        created_at: row.cart_created_at,
+        updated_at: row.cart_updated_at,
+        product: {
+          id: row.product_id,
+          name: row.name,
+          license: row.license,
+          description: row.description,
+          rating: row.rating,
+          price: row.price,
+          category: row.category,
+          main_image_url: row.main_image_url,
+          gallery_images: galleryImages,
+          feature_1: row.feature_1,
+          feature_2: row.feature_2,
+          feature_3: row.feature_3,
+          feature_4: row.feature_4,
+          feature_5: row.feature_5,
+          requirements: row.requirements,
+          version: row.version,
+          file_size: row.file_size,
+          download_count: row.download_count,
+          is_featured: row.is_featured,
+          demo_url: row.demo_url,
+          documentation_url: row.documentation_url,
+          support_email: row.support_email,
+          tags: row.tags,
+          created_at: row.product_created_at,
+          updated_at: row.product_updated_at
+        }
+      };
+    });
 
     res.json(cartItems);
   } catch (error) {

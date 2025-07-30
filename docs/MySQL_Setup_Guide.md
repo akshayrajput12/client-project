@@ -165,7 +165,7 @@ DB_PASS=your_mysql_password
 # DB_PASS=your_password_here
 
 # Server Configuration
-PORT=5000
+PORT=5500
 ```
 
 ### Test the Connection
@@ -186,7 +186,7 @@ npm run dev
 
 4. You should see:
 ```
-Server running on port 5000
+Server running on port 5500
 Database connected successfully
 ```
 

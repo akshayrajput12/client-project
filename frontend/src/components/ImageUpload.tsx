@@ -29,9 +29,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       return;
     }
 
-    // Validate file size (max 10MB)
-    if (file.size > 10 * 1024 * 1024) {
-      alert('File size must be less than 10MB');
+    // Validate file size (max 5MB for better performance)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('File size must be less than 5MB');
       return;
     }
 

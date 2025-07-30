@@ -184,9 +184,21 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
     };
 
     res.status(201).json(product);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error creating product:', error);
-    res.status(500).json({ error: 'Failed to create product' });
+    
+    // Handle specific database errors
+    if (error.code === 'ER_DATA_TOO_LONG') {
+      res.status(400).json({ 
+        error: 'Image data is too large. Please use a smaller image or an image URL instead of uploading large files.' 
+      });
+    } else if (error.code === 'ER_BAD_NULL_ERROR') {
+      res.status(400).json({ 
+        error: 'Required field is missing. Please check all required fields are filled.' 
+      });
+    } else {
+      res.status(500).json({ error: 'Failed to create product' });
+    }
   }
 };
 
@@ -251,9 +263,21 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
     };
 
     res.json(product);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error updating product:', error);
-    res.status(500).json({ error: 'Failed to update product' });
+    
+    // Handle specific database errors
+    if (error.code === 'ER_DATA_TOO_LONG') {
+      res.status(400).json({ 
+        error: 'Image data is too large. Please use a smaller image or an image URL instead of uploading large files.' 
+      });
+    } else if (error.code === 'ER_BAD_NULL_ERROR') {
+      res.status(400).json({ 
+        error: 'Required field is missing. Please check all required fields are filled.' 
+      });
+    } else {
+      res.status(500).json({ error: 'Failed to update product' });
+    }
   }
 };
 

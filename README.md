@@ -81,7 +81,7 @@ DB_USER=your-username
 DB_PASS=your-password
 
 # Server Configuration
-PORT=5000
+PORT=5500
 NODE_ENV=development
 ```
 
@@ -217,7 +217,7 @@ product-catalog-app/
 npm run dev          # Start development server with hot reload
 npm run build        # Compile TypeScript to JavaScript
 npm start           # Start production server
-npm run migrate     # Run database migration
+npm run migrate     # Run database migration (required for image uploads)
 npm run seed        # Seed database with sample data
 ```
 
@@ -265,6 +265,22 @@ npm run lint        # Run ESLint
 - `PUT /api/cart/:id` - Update cart item quantity
 - `DELETE /api/cart/:id` - Remove item from cart
 
+## 🚀 Quick Setup
+
+### First Time Setup
+1. **Database Setup**: Follow the [MySQL Setup Guide](docs/MySQL_Setup_Guide.md)
+2. **Run Migration**: `cd backend && npm run migrate` (required for image uploads)
+3. **Seed Data**: `cd backend && npm run seed` (optional sample data)
+4. **Start Backend**: `cd backend && npm run dev`
+5. **Start Frontend**: `cd frontend && npm run dev`
+
+### Upgrading from Previous Version
+If you're upgrading and getting image upload errors:
+```bash
+cd backend
+npm run migrate
+```
+
 ## 🚨 Troubleshooting
 
 ### Common Issues
@@ -276,7 +292,7 @@ npm run lint        # Run ESLint
 
 2. **Port Already in Use**
    - Change PORT in `.env` file
-   - Kill existing processes: `lsof -ti:5000 | xargs kill -9`
+   - Kill existing processes: `lsof -ti:5500 | xargs kill -9`
 
 3. **TypeScript Compilation Errors**
    - Run `npm install` to ensure all dependencies are installed
@@ -286,9 +302,15 @@ npm run lint        # Run ESLint
    - Clear Vite cache: `rm -rf node_modules/.vite`
    - Reinstall dependencies: `rm -rf node_modules && npm install`
 
+5. **Image Upload Errors**
+   - "Data too long for column 'main_image_url'": Run `npm run migrate` in backend folder
+   - "File size too large": Compress images to under 5MB or use image URLs
+   - See [Image Upload Setup Guide](docs/IMAGE_UPLOAD_SETUP.md) for detailed troubleshooting
+
 ## 📚 Additional Documentation
 
 - [MySQL Setup Guide](docs/MySQL_Setup_Guide.md) - Detailed local MySQL setup instructions
+- [Image Upload Setup](docs/IMAGE_UPLOAD_SETUP.md) - Image upload configuration and troubleshooting
 - [Database Schema](database/schema.sql) - Complete database structure
 - [Sample Data](database/sample_data.sql) - Example products for testing
 

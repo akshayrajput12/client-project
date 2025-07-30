@@ -60,6 +60,24 @@ const ProductDetail = () => {
     }
   };
 
+  const downloadImage = async (imageUrl: string, filename: string) => {
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Failed to download image:', error);
+      alert('Failed to download image');
+    }
+  };
+
   if (loading) {
     return (
       <Layout>
@@ -157,13 +175,30 @@ const ProductDetail = () => {
           {/* Image Gallery */}
           <div className="space-y-4">
             {/* Main Image */}
-            <div className="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden">
+            <div className="relative aspect-square bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden group">
               {selectedImage || product.main_image_url ? (
-                <img
-                  src={selectedImage || product.main_image_url}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                />
+                <>
+                  <img
+                    src={selectedImage || product.main_image_url}
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
+                  {/* Download Button Overlay */}
+                  <div className="absolute inset-0  bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+                    <button
+                      onClick={() => downloadImage(
+                        selectedImage || product.main_image_url!,
+                        `${product.name.replace(/[^a-zA-Z0-9]/g, '_')}_image.jpg`
+                      )}
+                      className="opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white bg-opacity-90 hover:bg-opacity-100 text-gray-800 px-4 py-2 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center space-x-2"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      <span>Download</span>
+                    </button>
+                  </div>
+                </>
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
                   <div className="text-center">
@@ -182,25 +217,52 @@ const ProductDetail = () => {
             {product.gallery_images && product.gallery_images.length > 0 && (
               <div className="grid grid-cols-4 gap-2">
                 {product.main_image_url && (
-                  <button
-                    onClick={() => setSelectedImage(product.main_image_url!)}
-                    className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
-                      selectedImage === product.main_image_url ? 'border-indigo-500 ring-2 ring-indigo-200' : 'border-gray-200 hover:border-gray-300'
-                    }`}
-                  >
-                    <img src={product.main_image_url} alt="Main" className="w-full h-full object-cover" />
-                  </button>
+                  <div className="relative group">
+                    <button
+                      onClick={() => setSelectedImage(product.main_image_url!)}
+                      className={`aspect-square rounded-lg overflow-hidden border-2 transition-all w-full ${
+                        selectedImage === product.main_image_url ? 'border-indigo-500 ring-2 ring-indigo-200' : 'border-gray-200 hover:border-gray-300'
+                      }`}
+                    >
+                      <img src={product.main_image_url} alt="Main" className="w-full h-full object-cover" />
+                    </button>
+                    <button
+                      onClick={() => downloadImage(
+                        product.main_image_url!,
+                        `${product.name.replace(/[^a-zA-Z0-9]/g, '_')}_main.jpg`
+                      )}
+                      className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white bg-opacity-90 hover:bg-opacity-100 text-gray-800 p-1 rounded-md shadow-lg hover:shadow-xl transform hover:scale-110"
+                      title="Download image"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                    </button>
+                  </div>
                 )}
                 {product.gallery_images.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setSelectedImage(image)}
-                    className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
-                      selectedImage === image ? 'border-indigo-500 ring-2 ring-indigo-200' : 'border-gray-200 hover:border-gray-300'
-                    }`}
-                  >
-                    <img src={image} alt={`Gallery ${index + 1}`} className="w-full h-full object-cover" />
-                  </button>
+                  <div key={index} className="relative group">
+                    <button
+                      onClick={() => setSelectedImage(image)}
+                      className={`aspect-square rounded-lg overflow-hidden border-2 transition-all w-full ${
+                        selectedImage === image ? 'border-indigo-500 ring-2 ring-indigo-200' : 'border-gray-200 hover:border-gray-300'
+                      }`}
+                    >
+                      <img src={image} alt={`Gallery ${index + 1}`} className="w-full h-full object-cover" />
+                    </button>
+                    <button
+                      onClick={() => downloadImage(
+                        image,
+                        `${product.name.replace(/[^a-zA-Z0-9]/g, '_')}_gallery_${index + 1}.jpg`
+                      )}
+                      className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white bg-opacity-90 hover:bg-opacity-100 text-gray-800 p-1 rounded-md shadow-lg hover:shadow-xl transform hover:scale-110"
+                      title="Download image"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                    </button>
+                  </div>
                 ))}
               </div>
             )}
@@ -454,15 +516,49 @@ const ProductDetail = () => {
         {/* Actions */}
         <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-8 py-6 border-t border-gray-200">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
-            <Link
-              to="/"
-              className="inline-flex items-center px-6 py-3 border border-gray-300 text-sm font-semibold rounded-xl text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 shadow-sm hover:shadow-md"
-            >
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-              Back to Products
-            </Link>
+            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+              <Link
+                to="/"
+                className="inline-flex items-center px-6 py-3 border border-gray-300 text-sm font-semibold rounded-xl text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 shadow-sm hover:shadow-md"
+              >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Back to Products
+              </Link>
+
+              {/* Download All Images Button */}
+              {(product.main_image_url || (product.gallery_images && product.gallery_images.length > 0)) && (
+                <button
+                  onClick={async () => {
+                    const images = [];
+                    if (product.main_image_url) {
+                      images.push({ url: product.main_image_url, name: 'main' });
+                    }
+                    if (product.gallery_images) {
+                      product.gallery_images.forEach((img, index) => {
+                        images.push({ url: img, name: `gallery_${index + 1}` });
+                      });
+                    }
+                    
+                    for (const img of images) {
+                      await downloadImage(
+                        img.url,
+                        `${product.name.replace(/[^a-zA-Z0-9]/g, '_')}_${img.name}.jpg`
+                      );
+                      // Small delay between downloads
+                      await new Promise(resolve => setTimeout(resolve, 500));
+                    }
+                  }}
+                  className="inline-flex items-center px-6 py-3 border border-green-300 text-sm font-semibold rounded-xl text-green-700 bg-green-50 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-300 shadow-sm hover:shadow-md"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Download All Images
+                </button>
+              )}
+            </div>
 
             {user?.is_admin && (
               <Link

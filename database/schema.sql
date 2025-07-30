@@ -37,8 +37,8 @@ CREATE TABLE IF NOT EXISTS products (
   price DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
   category VARCHAR(255) NOT NULL,
   
-  -- Image fields
-  main_image_url TEXT,
+  -- Image fields (LONGTEXT to support base64 encoded images)
+  main_image_url LONGTEXT,
   gallery_images JSON,
   
   -- Feature fields (separate instead of JSON for easier admin input)

@@ -8,7 +8,10 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "test": "jest",
-    "seed": "ts-node src/scripts/seedDatabase.ts"
+    "seed": "ts-node src/scripts/seedDatabase.ts",
+    "migrate": "ts-node src/scripts/runMigration.ts",
+    "fix-images": "ts-node src/scripts/fixImageColumn.ts",
+    "diagnose-images": "ts-node src/scripts/diagnoseImageIssue.ts"
   },
   "dependencies": {
     "cookie-parser": "^1.4.7",
