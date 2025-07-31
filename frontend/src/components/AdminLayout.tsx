@@ -8,7 +8,7 @@ import {
   Bars3Icon,
   BellIcon,
   UserIcon,
-  ArrowRightOnRectangleIcon,
+  ArrowRightStartOnRectangleIcon,
   MagnifyingGlassIcon
 } from '@heroicons/react/24/outline';
 
@@ -16,14 +16,12 @@ interface AdminLayoutProps {
   children: React.ReactNode;
   title?: string;
   subtitle?: string;
-  onDashboardOverviewClick?: () => void;
 }
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ 
   children, 
   title = "Admin Dashboard",
-  subtitle = "Manage your product catalog",
-  onDashboardOverviewClick
+  subtitle = "Manage your product catalog"
 }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -120,51 +118,15 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
                   </div>
                 </div>
 
-                {/* Dashboard Dropdown */}
-
-
+               
                 {/* Notifications */}
                 <button className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md">
                   <BellIcon className="h-6 w-6" />
                   <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-400"></span>
                 </button>
+                 {/* Dashboard Dropdown */}
+                 <DashboardDropdown stats={stats} />
 
-                {/* User Menu */}
-                <div className="relative group">
-                  <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md">
-                    <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center">
-                      <UserIcon className="h-5 w-5 text-white" />
-                    </div>
-                    <span className="hidden sm:block text-sm font-medium">
-                      {user?.email}
-                    </span>
-                  </button>
-                  
-                  {/* Dropdown Menu */}
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                    <button
-                      onClick={() => navigate('/profile')}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      Profile Settings
-                    </button>
-                    <button
-                      onClick={() => navigate('/')}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      View Store
-                    </button>
-                    <hr className="my-1" />
-                    <button
-                      onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
-                    >
-                      <ArrowRightOnRectangleIcon className="h-4 w-4 mr-2" />
-                      Sign Out
-                    </button>
-                  </div>
-                </div>
-                <DashboardDropdown stats={stats} />
               </div>
             </div>
           </div>

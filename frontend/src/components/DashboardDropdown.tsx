@@ -122,13 +122,36 @@ const DashboardDropdown: React.FC<DashboardDropdownProps> = ({ stats }) => {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      {/* Dashboard Icon Button */}
+      {/* Dashboard Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors duration-200"
+        className="flex items-center justify-between bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 min-w-[200px]"
         title="Dashboard Overview"
       >
-        <DashboardIcon />
+        <div className="flex items-center space-x-3">
+          {/* User Avatar/Icon */}
+          <div className="w-8 h-8 bg-white rounded-md flex items-center justify-center">
+            <svg className="w-5 h-5 text-teal-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+            </svg>
+          </div>
+          {/* Username */}
+          <span className="text-white font-medium text-sm">
+            {getUserData().username}
+          </span>
+        </div>
+
+        {/* Grid Icon (4 dots) */}
+        <div className="flex flex-col space-y-1">
+          <div className="flex space-x-1">
+            <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
+            <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
+          </div>
+          <div className="flex space-x-1">
+            <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
+            <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
+          </div>
+        </div>
       </button>
 
       {/* Dropdown Panel */}
