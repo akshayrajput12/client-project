@@ -20,6 +20,31 @@ const DashboardDropdown: React.FC<DashboardDropdownProps> = ({ stats }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
+  // Get admin username from localStorage or use default
+  const getAdminUsername = () => {
+    try {
+      const user = localStorage.getItem('user');
+      if (user) {
+        const userData = JSON.parse(user);
+        return userData.username || userData.name || 'Admin';
+      }
+    } catch (error) {
+      console.error('Error parsing user data:', error);
+    }
+    return 'Admin';
+  };
+
+  const handleLogout = () => {
+    // Clear any stored authentication data
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    sessionStorage.clear();
+
+    // Navigate to login page
+    navigate('/login');
+    setIsOpen(false);
+  };
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -34,16 +59,16 @@ const DashboardDropdown: React.FC<DashboardDropdownProps> = ({ stats }) => {
 
   // Dashboard grid icon (4 squares)
   const DashboardIcon = () => (
-    <svg 
-      className="h-6 w-6" 
-      fill="none" 
-      stroke="currentColor" 
+    <svg
+      className="h-6 w-6"
+      fill="none"
+      stroke="currentColor"
       viewBox="0 0 24 24"
     >
-      <rect x="3" y="3" width="7" height="7" rx="1" strokeWidth="2"/>
-      <rect x="14" y="3" width="7" height="7" rx="1" strokeWidth="2"/>
-      <rect x="3" y="14" width="7" height="7" rx="1" strokeWidth="2"/>
-      <rect x="14" y="14" width="7" height="7" rx="1" strokeWidth="2"/>
+      <rect x="3" y="3" width="7" height="7" rx="1" strokeWidth="2" />
+      <rect x="14" y="3" width="7" height="7" rx="1" strokeWidth="2" />
+      <rect x="3" y="14" width="7" height="7" rx="1" strokeWidth="2" />
+      <rect x="14" y="14" width="7" height="7" rx="1" strokeWidth="2" />
     </svg>
   );
 
@@ -60,26 +85,27 @@ const DashboardDropdown: React.FC<DashboardDropdownProps> = ({ stats }) => {
 
       {/* Dropdown Panel */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-50 transform transition-all duration-200">
+        <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 z-50 transform transition-all duration-200">
           {/* Header */}
           <div className="px-4 py-3 border-b border-gray-100">
-            <h3 className="text-lg font-semibold text-gray-900">Dashboard Overview</h3>
-            <p className="text-sm text-gray-500">Quick stats and navigation</p>
+            <h3 className="text-lg font-semibold text-gray-900">{getAdminUsername()}</h3>
+            <p className="text-sm text-gray-500">Quick access</p>
           </div>
 
           {/* Dashboard Stats Grid */}
-          <div className="p-4">
-            <div className="grid grid-cols-2 gap-3">
-              {/* Total Sales */}
+          <div className="px-4 py-4">
+            <div className="flex justify-between">
+              {/* Products */}
               <DashButton
-                title="Total Sales"
-                value={`€${stats.totalSales.toFixed(2)}`}
-                icon="€"
-                backgroundColor="#20B2AA"
-                className="h-20"
+                title="Products"
+                value={stats.totalProducts.toString()}
+                icon="📦"
+                backgroundColor="transparent"
+                className="h-18 w-16"
+                iconOnly={true}
                 onClick={() => {
                   setIsOpen(false);
-                  console.log('Total Sales clicked');
+                  navigate('/products');
                 }}
               />
 
@@ -88,90 +114,24 @@ const DashboardDropdown: React.FC<DashboardDropdownProps> = ({ stats }) => {
                 title="Users"
                 value={stats.totalUsers.toString()}
                 icon="👥"
-                backgroundColor="#4169E1"
-                className="h-20"
+                backgroundColor="transparent"
+                className="h-18 w-16"
+                iconOnly={true}
                 onClick={() => {
                   setIsOpen(false);
                   navigate('/admin/users');
                 }}
               />
 
-              {/* Products */}
+              {/* Logout */}
               <DashButton
-                title="Products"
-                value={stats.totalProducts.toString()}
-                icon="📦"
-                backgroundColor="#32CD32"
-                className="h-20"
-                onClick={() => {
-                  setIsOpen(false);
-                  navigate('/products');
-                }}
-              />
-
-              {/* Featured Products */}
-              <DashButton
-                title="Featured"
-                value={stats.featuredProducts.toString()}
-                icon="⭐"
-                backgroundColor="#F59E0B"
-                className="h-20"
-                onClick={() => {
-                  setIsOpen(false);
-                  console.log('Featured clicked');
-                }}
-              />
-
-              {/* Free Products */}
-              <DashButton
-                title="Free"
-                value={stats.freeProducts.toString()}
-                icon="🆓"
-                backgroundColor="#10B981"
-                className="h-20"
-                onClick={() => {
-                  setIsOpen(false);
-                  console.log('Free clicked');
-                }}
-              />
-
-              {/* Paid Products */}
-              <DashButton
-                title="Paid"
-                value={stats.paidProducts.toString()}
-                icon="💎"
-                backgroundColor="#EF4444"
-                className="h-20"
-                onClick={() => {
-                  setIsOpen(false);
-                  console.log('Paid clicked');
-                }}
-              />
-
-              {/* Average Rating */}
-              <DashButton
-                title="Rating"
-                value={stats.averageRating.toFixed(1)}
-                icon="⭐"
-                backgroundColor="#6366F1"
-                className="h-20"
-                onClick={() => {
-                  setIsOpen(false);
-                  console.log('Rating clicked');
-                }}
-              />
-
-              {/* License Types */}
-              <DashButton
-                title="Licenses"
-                value={stats.licenseTypes.toString()}
-                icon="📄"
-                backgroundColor="#8B5CF6"
-                className="h-20"
-                onClick={() => {
-                  setIsOpen(false);
-                  console.log('Licenses clicked');
-                }}
+                title="Logout"
+                value=""
+                icon="🚪"
+                backgroundColor="transparent"
+                className="h-18 w-16"
+                iconOnly={true}
+                onClick={handleLogout}
               />
             </div>
           </div>

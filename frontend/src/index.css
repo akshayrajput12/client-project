@@ -1,1 +1,33 @@
 @import "tailwindcss";
+
+/* Custom Color Palette Variables */
+:root {
+  --primary-teal: #128F8B;
+  --primary-bg: #FFFFFF;
+  --text-primary: #000000;
+  --secondary-teal: #24D4C6;
+  --secondary-bg: #E0E0E0;
+  --error-color: #EA6B66;
+}
+
+/* Base styles */
+body {
+  background-color: var(--primary-bg);
+  color: var(--text-primary);
+}
+
+/* Custom utility classes */
+.bg-primary-teal { background-color: var(--primary-teal); }
+.bg-secondary-teal { background-color: var(--secondary-teal); }
+.bg-secondary-gray { background-color: var(--secondary-bg); }
+.text-primary-teal { color: var(--primary-teal); }
+.text-secondary-teal { color: var(--secondary-teal); }
+.text-error { color: var(--error-color); }
+.bg-error { background-color: var(--error-color); }
+.border-primary-teal { border-color: var(--primary-teal); }
+.border-secondary-teal { border-color: var(--secondary-teal); }
+.border-error { border-color: var(--error-color); }
+
+/* Hover states */
+.hover\:bg-primary-teal-dark:hover { background-color: #0f7a77; }
+.hover\:bg-secondary-teal-dark:hover { background-color: #1fb8ac; }

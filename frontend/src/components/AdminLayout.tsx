@@ -16,12 +16,14 @@ interface AdminLayoutProps {
   children: React.ReactNode;
   title?: string;
   subtitle?: string;
+  onDashboardOverviewClick?: () => void;
 }
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ 
   children, 
   title = "Admin Dashboard",
-  subtitle = "Manage your product catalog"
+  subtitle = "Manage your product catalog",
+  onDashboardOverviewClick
 }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);

@@ -148,7 +148,7 @@ const ProductDetail = () => {
           <li className="inline-flex items-center">
             <Link
               to="/"
-              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600"
+              className="inline-flex items-center text-sm font-medium text-text-primary hover:text-primary-teal"
             >
               <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
@@ -161,7 +161,7 @@ const ProductDetail = () => {
               <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
               </svg>
-              <span className="ml-1 text-sm font-medium text-gray-500 md:ml-2">
+              <span className="ml-1 text-sm font-medium text-text-primary opacity-60 md:ml-2">
                 {product.name}
               </span>
             </div>
@@ -170,7 +170,7 @@ const ProductDetail = () => {
       </nav>
 
       {/* Product Details */}
-      <div className="bg-white shadow-xl rounded-2xl overflow-hidden">
+      <div className="bg-primary-bg shadow-xl rounded-2xl overflow-hidden border border-secondary-bg">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
           {/* Image Gallery */}
           <div className="space-y-4">
@@ -272,21 +272,21 @@ const ProductDetail = () => {
           <div className="space-y-6">
             {/* Header */}
             <div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              <h1 className="text-4xl font-bold text-text-primary mb-4">
                 {product.name}
               </h1>
               <div className="flex items-center space-x-4 mb-6">
                 <StarRating rating={product.rating} size="lg" />
-                <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-800 border border-blue-200">
+                <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-secondary-bg text-primary-teal border border-primary-teal">
                   {product.license}
                 </span>
                 {product.category && (
-                  <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-800 border border-indigo-200">
+                  <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-secondary-bg text-primary-teal border border-secondary-teal">
                     {product.category}
                   </span>
                 )}
                 {product.is_featured && (
-                  <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-bold bg-gradient-to-r from-yellow-400 to-orange-400 text-white shadow-lg">
+                  <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-bold bg-secondary-teal text-white shadow-lg">
                     ⭐ Featured
                   </span>
                 )}
@@ -294,11 +294,11 @@ const ProductDetail = () => {
 
               {/* Price */}
               <div className="mb-6">
-                <span className="text-4xl font-bold text-gray-900">
+                <span className="text-4xl font-bold text-text-primary">
                   ${Number(product.price || 0).toFixed(2)}
                 </span>
                 {product.download_count !== undefined && (
-                  <span className="ml-4 text-lg text-gray-500">
+                  <span className="ml-4 text-lg text-text-primary opacity-60">
                     {product.download_count} downloads
                   </span>
                 )}
@@ -307,16 +307,16 @@ const ProductDetail = () => {
 
             {/* Add to Cart Section */}
             {user ? (
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-6 rounded-xl border border-gray-200">
+              <div className="bg-secondary-bg p-6 rounded-xl border border-secondary-bg">
                 <div className="flex items-center space-x-4 mb-4">
-                  <label htmlFor="quantity" className="text-sm font-semibold text-gray-700">
+                  <label htmlFor="quantity" className="text-sm font-semibold text-text-primary">
                     Quantity:
                   </label>
                   <select
                     id="quantity"
                     value={quantity}
                     onChange={(e) => setQuantity(parseInt(e.target.value))}
-                    className="border border-gray-300 rounded-lg px-4 py-2 text-sm font-medium bg-white shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    className="border border-secondary-bg rounded-lg px-4 py-2 text-sm font-medium bg-primary-bg text-text-primary shadow-sm focus:ring-2 focus:ring-primary-teal focus:border-primary-teal"
                   >
                     {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
                       <option key={num} value={num}>{num}</option>
@@ -326,7 +326,7 @@ const ProductDetail = () => {
                 <button
                   onClick={handleAddToCart}
                   disabled={addingToCart}
-                  className="w-full bg-gradient-to-r from-teal-600 to-blue-600 text-white px-6 py-4 rounded-xl hover:from-teal-700 hover:to-blue-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  className="w-full bg-primary-teal text-white px-6 py-4 rounded-xl hover:bg-secondary-teal transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
                   {addingToCart ? (
                     <span className="flex items-center justify-center">
@@ -342,18 +342,18 @@ const ProductDetail = () => {
                 </button>
               </div>
             ) : (
-              <div className="bg-gradient-to-br from-yellow-50 to-orange-50 border border-yellow-200 p-6 rounded-xl">
-                <p className="text-sm text-yellow-800 mb-3 font-medium">Please log in to add items to cart</p>
+              <div className="bg-secondary-bg border border-secondary-bg p-6 rounded-xl">
+                <p className="text-sm text-text-primary mb-3 font-medium">Please log in to add items to cart</p>
                 <Link
                   to="/login"
-                  className="inline-block bg-gradient-to-r from-yellow-600 to-orange-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:from-yellow-700 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  className="inline-block bg-primary-teal text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-secondary-teal transition-all duration-300 shadow-lg hover:shadow-xl"
                 >
                   Log In
                 </Link>
               </div>
             )}
 
-            <div className="text-sm text-gray-500 bg-gray-50 px-3 py-2 rounded-lg">
+            <div className="text-sm text-text-primary opacity-60 bg-secondary-bg px-3 py-2 rounded-lg">
               Product ID: {product.id}
             </div>
           </div>
@@ -363,9 +363,9 @@ const ProductDetail = () => {
         {/* Description */}
         <div className="px-8 pb-8">
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Description</h2>
+            <h2 className="text-2xl font-bold text-text-primary mb-4">Description</h2>
             <div className="prose max-w-none">
-              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap text-lg">
+              <p className="text-text-primary opacity-80 leading-relaxed whitespace-pre-wrap text-lg">
                 {product.description}
               </p>
             </div>
@@ -374,18 +374,18 @@ const ProductDetail = () => {
           {/* Features */}
           {(product.feature_1 || product.feature_2 || product.feature_3 || product.feature_4 || product.feature_5) && (
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Key Features</h2>
+              <h2 className="text-2xl font-bold text-text-primary mb-6">Key Features</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[product.feature_1, product.feature_2, product.feature_3, product.feature_4, product.feature_5]
                   .filter(Boolean)
                   .map((feature, index) => (
-                    <div key={index} className="flex items-center space-x-3 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-100">
+                    <div key={index} className="flex items-center space-x-3 p-4 bg-secondary-bg rounded-xl border border-secondary-teal">
                       <div className="flex-shrink-0">
-                        <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-6 h-6 text-secondary-teal" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                       </div>
-                      <span className="text-gray-800 font-medium">{feature}</span>
+                      <span className="text-text-primary font-medium">{feature}</span>
                     </div>
                   ))}
               </div>
@@ -395,30 +395,30 @@ const ProductDetail = () => {
           {/* Technical Details */}
           {(product.requirements || product.version || product.file_size || product.demo_url || product.documentation_url || product.support_email || product.tags) && (
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Technical Details</h2>
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 border border-gray-200">
+              <h2 className="text-2xl font-bold text-text-primary mb-6">Technical Details</h2>
+              <div className="bg-secondary-bg rounded-xl p-6 border border-secondary-bg">
                 <dl className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2">
                   {product.version && (
-                    <div className="bg-white p-4 rounded-lg shadow-sm">
-                      <dt className="text-sm font-semibold text-gray-600 mb-1">Version</dt>
-                      <dd className="text-lg font-medium text-gray-900">{product.version}</dd>
+                    <div className="bg-primary-bg p-4 rounded-lg shadow-sm">
+                      <dt className="text-sm font-semibold text-text-primary opacity-70 mb-1">Version</dt>
+                      <dd className="text-lg font-medium text-text-primary">{product.version}</dd>
                     </div>
                   )}
                   {product.file_size && (
-                    <div className="bg-white p-4 rounded-lg shadow-sm">
-                      <dt className="text-sm font-semibold text-gray-600 mb-1">File Size</dt>
-                      <dd className="text-lg font-medium text-gray-900">{product.file_size}</dd>
+                    <div className="bg-primary-bg p-4 rounded-lg shadow-sm">
+                      <dt className="text-sm font-semibold text-text-primary opacity-70 mb-1">File Size</dt>
+                      <dd className="text-lg font-medium text-text-primary">{product.file_size}</dd>
                     </div>
                   )}
                   {product.demo_url && (
-                    <div className="bg-white p-4 rounded-lg shadow-sm">
-                      <dt className="text-sm font-semibold text-gray-600 mb-1">Demo</dt>
+                    <div className="bg-primary-bg p-4 rounded-lg shadow-sm">
+                      <dt className="text-sm font-semibold text-text-primary opacity-70 mb-1">Demo</dt>
                       <dd>
                         <a
                           href={product.demo_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-600 hover:text-blue-800 font-medium underline"
+                          className="text-primary-teal hover:text-secondary-teal font-medium underline"
                         >
                           View Live Demo
                         </a>
@@ -426,14 +426,14 @@ const ProductDetail = () => {
                     </div>
                   )}
                   {product.documentation_url && (
-                    <div className="bg-white p-4 rounded-lg shadow-sm">
-                      <dt className="text-sm font-semibold text-gray-600 mb-1">Documentation</dt>
+                    <div className="bg-primary-bg p-4 rounded-lg shadow-sm">
+                      <dt className="text-sm font-semibold text-text-primary opacity-70 mb-1">Documentation</dt>
                       <dd>
                         <a
                           href={product.documentation_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-600 hover:text-blue-800 font-medium underline"
+                          className="text-primary-teal hover:text-secondary-teal font-medium underline"
                         >
                           View Documentation
                         </a>
@@ -441,12 +441,12 @@ const ProductDetail = () => {
                     </div>
                   )}
                   {product.support_email && (
-                    <div className="bg-white p-4 rounded-lg shadow-sm">
-                      <dt className="text-sm font-semibold text-gray-600 mb-1">Support</dt>
+                    <div className="bg-primary-bg p-4 rounded-lg shadow-sm">
+                      <dt className="text-sm font-semibold text-text-primary opacity-70 mb-1">Support</dt>
                       <dd>
                         <a
                           href={`mailto:${product.support_email}`}
-                          className="text-blue-600 hover:text-blue-800 font-medium underline"
+                          className="text-primary-teal hover:text-secondary-teal font-medium underline"
                         >
                           {product.support_email}
                         </a>
@@ -454,13 +454,13 @@ const ProductDetail = () => {
                     </div>
                   )}
                   {product.tags && (
-                    <div className="bg-white p-4 rounded-lg shadow-sm">
-                      <dt className="text-sm font-semibold text-gray-600 mb-2">Tags</dt>
+                    <div className="bg-primary-bg p-4 rounded-lg shadow-sm">
+                      <dt className="text-sm font-semibold text-text-primary opacity-70 mb-2">Tags</dt>
                       <dd className="flex flex-wrap gap-2">
                         {product.tags.split(',').map((tag, index) => (
                           <span
                             key={index}
-                            className="px-3 py-1 bg-indigo-100 text-indigo-800 text-sm font-medium rounded-full"
+                            className="px-3 py-1 bg-secondary-bg text-primary-teal text-sm font-medium rounded-full border border-primary-teal"
                           >
                             {tag.trim()}
                           </span>

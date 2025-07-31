@@ -102,22 +102,22 @@ const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Sidebar */}
       <div className={`
-        bg-white shadow-lg transition-all duration-300 ease-in-out flex flex-col flex-shrink-0
+        bg-primary-bg shadow-lg transition-all duration-300 ease-in-out flex flex-col flex-shrink-0 border-r border-secondary-bg
         ${isOpen ? 'w-80' : 'w-16'}
         ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         lg:translate-x-0 lg:relative
         fixed top-0 left-0 h-screen z-50 lg:h-auto lg:static
       `}>
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 flex-shrink-0">
+        <div className="flex items-center justify-between p-4 border-b border-secondary-bg flex-shrink-0">
           {isOpen && (
-            <h2 className="text-xl font-bold text-gray-800">
+            <h2 className="text-xl font-bold text-text-primary">
               Product Catalog
             </h2>
           )}
           <button
             onClick={onToggle}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="p-2 rounded-lg hover:bg-secondary-bg transition-colors text-primary-teal"
           >
             {isOpen ? (
               <ChevronLeftIcon className="w-5 h-5" />
@@ -141,8 +141,8 @@ const Sidebar: React.FC<SidebarProps> = ({
                   className={`
                     flex items-center px-3 py-2 rounded-lg transition-colors
                     ${isActive 
-                      ? 'bg-indigo-100 text-indigo-700 border-r-2 border-indigo-500' 
-                      : 'text-gray-700 hover:bg-gray-100'
+                      ? 'bg-secondary-bg text-primary-teal border-r-2 border-primary-teal' 
+                      : 'text-text-primary hover:bg-secondary-bg'
                     }
                   `}
                 >
@@ -158,15 +158,15 @@ const Sidebar: React.FC<SidebarProps> = ({
 
         {/* Filters Section */}
         {showFilters && isOpen && (
-          <div className="p-4 border-t border-gray-200">
+          <div className="p-4 border-t border-secondary-bg">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-800 flex items-center">
+              <h3 className="text-lg font-semibold text-text-primary flex items-center">
                 <FunnelIcon className="w-5 h-5 mr-2" />
                 Filters
               </h3>
               <button
                 onClick={clearFilters}
-                className="text-sm text-indigo-600 hover:text-indigo-800"
+                className="text-sm text-primary-teal hover:text-secondary-teal"
               >
                 Clear All
               </button>
@@ -175,14 +175,14 @@ const Sidebar: React.FC<SidebarProps> = ({
             <div className="space-y-6">
               {/* Category Filter */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                <label className="block text-sm font-medium text-text-primary mb-2 flex items-center">
                   <TagIcon className="w-4 h-4 mr-1" />
                   Category
                 </label>
                 <select
                   value={filters.category}
                   onChange={(e) => handleFilterChange('category', e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full p-2 border border-secondary-bg rounded-md focus:ring-2 focus:ring-primary-teal focus:border-primary-teal bg-primary-bg text-text-primary"
                 >
                   <option value="">All Categories</option>
                   {categories.map((category) => (
@@ -195,7 +195,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
               {/* Price Range Filter */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                <label className="block text-sm font-medium text-text-primary mb-2 flex items-center">
                   <CurrencyDollarIcon className="w-4 h-4 mr-1" />
                   Price Range
                 </label>
@@ -206,9 +206,9 @@ const Sidebar: React.FC<SidebarProps> = ({
                     max="1000"
                     value={filters.priceRange[1]}
                     onChange={(e) => handleFilterChange('priceRange', [0, parseInt(e.target.value)])}
-                    className="w-full"
+                    className="w-full accent-primary-teal"
                   />
-                  <div className="flex justify-between text-sm text-gray-600">
+                  <div className="flex justify-between text-sm text-text-primary opacity-70">
                     <span>$0</span>
                     <span>${filters.priceRange[1]}</span>
                   </div>
@@ -217,7 +217,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
               {/* Rating Filter */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                <label className="block text-sm font-medium text-text-primary mb-2 flex items-center">
                   <StarIcon className="w-4 h-4 mr-1" />
                   Minimum Rating
                 </label>
@@ -227,7 +227,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                       key={rating}
                       onClick={() => handleFilterChange('rating', rating)}
                       className={`p-1 ${
-                        filters.rating >= rating ? 'text-yellow-400' : 'text-gray-300'
+                        filters.rating >= rating ? 'text-secondary-teal' : 'text-secondary-bg'
                       }`}
                     >
                       <StarIcon className="w-5 h-5 fill-current" />
@@ -238,13 +238,13 @@ const Sidebar: React.FC<SidebarProps> = ({
 
               {/* License Filter */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-text-primary mb-2">
                   License Type
                 </label>
                 <select
                   value={filters.license}
                   onChange={(e) => handleFilterChange('license', e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full p-2 border border-secondary-bg rounded-md focus:ring-2 focus:ring-primary-teal focus:border-primary-teal bg-primary-bg text-text-primary"
                 >
                   <option value="">All Licenses</option>
                   {licenses.map((license) => (
@@ -262,9 +262,9 @@ const Sidebar: React.FC<SidebarProps> = ({
                     type="checkbox"
                     checked={filters.featured}
                     onChange={(e) => handleFilterChange('featured', e.target.checked)}
-                    className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    className="rounded border-secondary-bg text-primary-teal focus:ring-primary-teal accent-primary-teal"
                   />
-                  <span className="ml-2 text-sm text-gray-700">Featured Products Only</span>
+                  <span className="ml-2 text-sm text-text-primary">Featured Products Only</span>
                 </label>
               </div>
             </div>

@@ -32,7 +32,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-2xl hover:border-indigo-200 transition-all duration-500 group transform hover:-translate-y-1">
+    <div className="bg-primary-bg rounded-xl border border-secondary-bg overflow-hidden hover:shadow-2xl hover:border-primary-teal transition-all duration-500 group transform hover:-translate-y-1">
       {/* Product Image */}
       <div className="relative h-52 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
         {product.main_image_url ? (
@@ -56,14 +56,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
         {/* Featured Badge */}
         {product.is_featured && (
-          <div className="absolute top-3 left-3 bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+          <div className="absolute top-3 left-3 bg-secondary-teal text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
             ⭐ Featured
           </div>
         )}
 
         {/* Price Badge */}
-        <div className="absolute top-3 right-3 bg-white bg-opacity-95 backdrop-blur-sm px-3 py-2 rounded-full shadow-lg border border-gray-100">
-          <span className="text-sm font-bold text-gray-900">
+        <div className="absolute top-3 right-3 bg-primary-bg bg-opacity-95 backdrop-blur-sm px-3 py-2 rounded-full shadow-lg border border-secondary-bg">
+          <span className="text-sm font-bold text-text-primary">
             ${Number(product.price || 0).toFixed(2)}
           </span>
         </div>
@@ -72,19 +72,19 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="p-5">
         {/* Category and License */}
         <div className="flex items-center justify-between mb-3">
-          <span className="text-xs font-semibold text-indigo-600 bg-gradient-to-r from-indigo-50 to-blue-50 px-3 py-1 rounded-full border border-indigo-100">
+          <span className="text-xs font-semibold text-primary-teal bg-secondary-bg px-3 py-1 rounded-full border border-primary-teal">
             {product.category}
           </span>
-          <span className="text-xs text-gray-500 bg-gray-50 px-2 py-1 rounded-full">{product.license}</span>
+          <span className="text-xs text-text-primary bg-secondary-bg px-2 py-1 rounded-full">{product.license}</span>
         </div>
 
         {/* Product Name */}
-        <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-indigo-600 transition-colors duration-300">
+        <h3 className="text-lg font-bold text-text-primary mb-3 line-clamp-2 group-hover:text-primary-teal transition-colors duration-300">
           {product.name}
         </h3>
 
         {/* Description */}
-        <p className="text-sm text-gray-600 mb-4 line-clamp-2 leading-relaxed">
+        <p className="text-sm text-text-primary mb-4 line-clamp-2 leading-relaxed opacity-80">
           {product.description}
         </p>
 
@@ -95,13 +95,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               {[product.feature_1, product.feature_2, product.feature_3].filter(Boolean).slice(0, 3).map((feature, index) => (
                 <span
                   key={index}
-                  className="text-xs bg-gradient-to-r from-blue-50 to-indigo-50 text-indigo-700 px-2 py-1 rounded-full border border-indigo-100"
+                  className="text-xs bg-secondary-bg text-primary-teal px-2 py-1 rounded-full border border-secondary-teal"
                 >
                   {feature}
                 </span>
               ))}
               {[product.feature_1, product.feature_2, product.feature_3, product.feature_4, product.feature_5].filter(Boolean).length > 3 && (
-                <span className="text-xs text-gray-500 font-medium">
+                <span className="text-xs text-text-primary font-medium opacity-60">
                   +{[product.feature_1, product.feature_2, product.feature_3, product.feature_4, product.feature_5].filter(Boolean).length - 3} more
                 </span>
               )}
@@ -113,7 +113,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="flex items-center justify-between mb-4">
           <StarRating rating={product.rating} />
           {product.download_count !== undefined && (
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-text-primary opacity-60">
               {product.download_count} downloads
             </span>
           )}
@@ -123,13 +123,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="flex space-x-3">
           <Link
             to={`/product/${product.id}`}
-            className="flex-1 bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700 px-4 py-3 rounded-lg hover:from-gray-100 hover:to-gray-200 transition-all duration-300 text-center text-sm font-semibold border border-gray-200 hover:border-gray-300"
+            className="flex-1 bg-secondary-bg text-text-primary px-4 py-3 rounded-lg hover:bg-primary-teal hover:text-white transition-all duration-300 text-center text-sm font-semibold border border-secondary-bg hover:border-primary-teal"
           >
             View Details
           </Link>
           <button
             onClick={handleAddToCart}
-            className="flex-1 bg-gradient-to-r from-teal-600 to-blue-600 text-white px-4 py-3 rounded-lg hover:from-teal-700 hover:to-blue-700 transition-all duration-300 text-sm font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
+            className="flex-1 bg-primary-teal text-white px-4 py-3 rounded-lg hover:bg-secondary-teal transition-all duration-300 text-sm font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
           >
             🛒 Add to Cart
           </button>

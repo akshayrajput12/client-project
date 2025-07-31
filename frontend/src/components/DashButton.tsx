@@ -9,6 +9,7 @@ interface DashButtonProps {
   valueColor?: string;
   onClick?: () => void;
   className?: string;
+  iconOnly?: boolean;
 }
 
 const DashButton: React.FC<DashButtonProps> = ({
@@ -19,8 +20,36 @@ const DashButton: React.FC<DashButtonProps> = ({
   textColor = 'white',
   valueColor = 'white',
   onClick,
-  className = ''
+  className = '',
+  iconOnly = false
 }) => {
+  if (iconOnly) {
+    return (
+      <div
+        className={`
+          flex flex-col items-center justify-center cursor-pointer
+          p-2
+          transform transition-all duration-300 hover:scale-105
+          ${className}
+        `}
+        onClick={onClick}
+        title={title}
+      >
+        <div className="text-xl text-gray-600 hover:text-gray-800 transition-colors duration-200 mb-1">
+          {icon}
+        </div>
+        {value && (
+          <div className="text-xs font-semibold text-gray-700 mb-1">
+            {value}
+          </div>
+        )}
+        <div className="text-xs text-gray-500 text-center">
+          {title}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       className={`

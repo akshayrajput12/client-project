@@ -102,7 +102,7 @@ const Layout: React.FC<LayoutProps> = ({
   }, [location.pathname, isMobile]);
 
   return (
-    <div className="h-screen bg-gray-50 flex">
+    <div className="h-screen bg-secondary-bg flex">
       {/* Sidebar */}
       <Sidebar
         isOpen={sidebarOpen}
@@ -114,14 +114,14 @@ const Layout: React.FC<LayoutProps> = ({
       {/* Main Content */}
       <div className="flex-1 flex flex-col transition-all duration-300 min-w-0">
         {/* Top Navigation Bar */}
-        <header className="bg-white shadow-sm border-b border-gray-200 flex-shrink-0 z-30">
+        <header className="bg-primary-bg shadow-sm border-b border-secondary-bg flex-shrink-0 z-30">
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               {/* Left side - Mobile menu button and search */}
               <div className="flex items-center space-x-4 flex-1">
                 <button
                   onClick={toggleSidebar}
-                  className="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                  className="lg:hidden p-2 rounded-md text-primary-teal hover:text-text-primary hover:bg-secondary-bg"
                 >
                   <Bars3Icon className="h-6 w-6" />
                 </button>
@@ -145,11 +145,11 @@ const Layout: React.FC<LayoutProps> = ({
                     {/* Cart Icon */}
                     <button
                       onClick={() => navigate('/cart')}
-                      className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md"
+                      className="relative p-2 text-primary-teal hover:text-text-primary hover:bg-secondary-bg rounded-md"
                     >
                       <ShoppingCartIcon className="h-6 w-6" />
                       {cartSummary.total_items > 0 && (
-                        <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                        <span className="absolute -top-1 -right-1 bg-primary-teal text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                           {cartSummary.total_items}
                         </span>
                       )}
@@ -157,7 +157,7 @@ const Layout: React.FC<LayoutProps> = ({
 
                     {/* User Menu */}
                     <div className="relative group">
-                      <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md">
+                      <button className="flex items-center space-x-2 p-2 text-primary-teal hover:text-text-primary hover:bg-secondary-bg rounded-md">
                         <UserIcon className="h-6 w-6" />
                         <span className="hidden sm:block text-sm font-medium">
                           {user.email}
@@ -165,25 +165,25 @@ const Layout: React.FC<LayoutProps> = ({
                       </button>
 
                       {/* Dropdown Menu */}
-                      <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                      <div className="absolute right-0 mt-2 w-48 bg-primary-bg rounded-md shadow-lg py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 border border-secondary-bg">
                         <button
                           onClick={() => navigate('/profile')}
-                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          className="block w-full text-left px-4 py-2 text-sm text-text-primary hover:bg-secondary-bg"
                         >
                           Profile
                         </button>
                         {user.is_admin && (
                           <button
                             onClick={() => navigate('/admin')}
-                            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            className="block w-full text-left px-4 py-2 text-sm text-text-primary hover:bg-secondary-bg"
                           >
                             Admin Dashboard
                           </button>
                         )}
-                        <hr className="my-1" />
+                        <hr className="my-1 border-secondary-bg" />
                         <button
                           onClick={handleLogout}
-                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                          className="block w-full text-left px-4 py-2 text-sm text-text-primary hover:bg-secondary-bg flex items-center"
                         >
                           <ArrowRightOnRectangleIcon className="h-4 w-4 mr-2" />
                           Sign Out
@@ -195,13 +195,13 @@ const Layout: React.FC<LayoutProps> = ({
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={() => navigate('/login')}
-                      className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900"
+                      className="px-4 py-2 text-sm font-medium text-primary-teal hover:text-text-primary"
                     >
                       Sign In
                     </button>
                     <button
                       onClick={() => navigate('/register')}
-                      className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md"
+                      className="px-4 py-2 text-sm font-medium text-white bg-primary-teal hover:bg-primary-teal-dark rounded-md"
                     >
                       Sign Up
                     </button>
