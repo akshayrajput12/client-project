@@ -121,7 +121,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
                 </div>
 
                 {/* Dashboard Dropdown */}
-                <DashboardDropdown stats={stats} />
+
 
                 {/* Notifications */}
                 <button className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md">
@@ -164,6 +164,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
                     </button>
                   </div>
                 </div>
+                <DashboardDropdown stats={stats} />
               </div>
             </div>
           </div>
